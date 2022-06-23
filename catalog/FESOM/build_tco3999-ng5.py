@@ -12,16 +12,27 @@ def find_paths():
 
     lens = [("3d", 48, {"time": 1, "nz": 1, "nz1": 1}), ("2d", 144, {"time": 1})]
     for name, size, chunks in lens:
-        yield (f"original_{name}", {
+        yield (
+            f"original_{name}",
+            {
                 "description": f"original {name} output",
                 "driver": "netcdf",
                 "args": {
-                    "urlpath": list(sorted([fn
-                         for f in fn_by_time[size]
-                         for fn in glob.glob("/work/bm1235/a270046/cycle2-sync/tco3999-ng5/*_tco3999_fesom/" + f)])),
+                    "urlpath": list(
+                        sorted(
+                            [
+                                fn
+                                for f in fn_by_time[size]
+                                for fn in glob.glob(
+                                    f"/work/bm1235/a270046/cycle2-sync/tco3999-ng5/*_tco3999_fesom/{f}"
+                                )
+                            ]
+                        )
+                    ),
                     "chunks": chunks,
-                }
-            })
+                },
+            },
+        )
 
 SOURCES = {
     "np": {
